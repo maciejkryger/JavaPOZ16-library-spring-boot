@@ -81,11 +81,24 @@ public class BookRepository {
         return false;
     }
 
-    public Set<Book> getBooks(String title){
-        if(title == null) {
-        return books;
+    public Set<Book> getBooks(String title, String author){
+
+        if (author==null) {
+            return books.stream()
+                    .filter(book -> book.getTitle().equals(title))
+                    .collect(Collectors.toSet());
         }
-        return books.stream().filter(book->book.getTitle().equals(title)).collect(Collectors.toSet());
+
+        else if (title==null) {
+            return books.stream()
+                    .filter(book -> book.getAuthor().equals(author))
+                    .collect(Collectors.toSet());
+        }
+
+        return books.stream()
+                .filter(book -> book.getAuthor().equals(author))
+                .filter(book -> book.getTitle().equals(title))
+                .collect(Collectors.toSet());
     }
 
     private int generateNextId() {
