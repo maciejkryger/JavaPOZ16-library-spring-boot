@@ -42,7 +42,7 @@ public class BookController {
     }
 
     @PostMapping(value = "/book/add", consumes = "application/json")
-    public ResponseEntity addBook(@RequestBody Book book) {
+    public ResponseEntity<Integer> addBook(@RequestBody Book book) {
         Book addedBook = orderService.addNewBook(book);
         return new ResponseEntity<>(addedBook.getId(),
                 HttpStatus.CREATED);
