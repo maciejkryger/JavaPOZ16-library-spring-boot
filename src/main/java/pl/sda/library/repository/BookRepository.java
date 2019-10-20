@@ -113,10 +113,9 @@ public class BookRepository {
         books.add(book);
     }
 
-    public Book findBookById(int id) {
+    public Optional<Book> findBookById(int id) {
         return books.stream()
                 .filter(bookInBase -> bookInBase.getId()==id)
-                .findAny()
-                .orElseThrow(()->new BookNotFoundException("Book not found!"));
+                .findAny();
     }
 }

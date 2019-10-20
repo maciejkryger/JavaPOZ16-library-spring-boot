@@ -45,7 +45,7 @@ public class OrderService {
         bookRepository.update(book);
     }
 
-    public Book findBookById(int id) {
+    public Optional<Book> findBookById(int id) {
     return bookRepository.findBookById(id);
     }
 }

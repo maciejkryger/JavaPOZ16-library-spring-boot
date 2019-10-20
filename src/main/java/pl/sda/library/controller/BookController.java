@@ -23,6 +23,14 @@ public class BookController {
         return orderService.getBooks(title,author);
     }
 
+    @GetMapping(value = "/books/{id}", produces = "application/json")
+    public ResponseEntity getBooksById(@PathVariable(required = false) int id) {
+        Optional<Book> optionalBook = orderService.findBookById(id);
+        if (optionalBook.isPresent()){
+            return ResponseEntity.ok(optionalBook.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
     @GetMapping(value = "/book/order/{id}", produces = "application/json")
     public ResponseEntity<Book> borrowBook(@PathVariable int id) {
         Optional<Book> book = orderService.borrowBook(id);
