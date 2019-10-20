@@ -19,8 +19,8 @@ public class BookController {
     }
 
     @GetMapping(value = "/books", produces = "application/json")
-    public Set<Book> getAllBooks(@RequestParam(required = false) String title) {
-        return orderService.getBooks(title);
+    public Set<Book> getAllBooks(@RequestParam(required = false) String title,@RequestParam(required = false) String author) {
+        return orderService.getBooks(title,author);
     }
 
     @GetMapping(value = "/book/order/{id}", produces = "application/json")
@@ -55,5 +55,7 @@ public class BookController {
         }
         return ResponseEntity.notFound().build();
     }
+
+
 
 }

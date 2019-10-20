@@ -37,8 +37,8 @@ public class OrderService {
         return bookRepository.removeBook(id);
     }
 
-    public Set<Book> getBooks(String title){
-        return bookRepository.getBooks(title);
+    public Set<Book> getBooks(String title, String author){
+        return bookRepository.getBooks(title,author);
     }
 
     public void updateBook(Book book) {
