@@ -49,7 +49,7 @@ public class BookController {
     }
 
     @DeleteMapping("/book/remove/{id}")
-    public ResponseEntity deleteBook(@PathVariable int id) {
+    public ResponseEntity removeBook(@PathVariable int id) {
         if (orderService.removeBook(id)) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(id);
         }
