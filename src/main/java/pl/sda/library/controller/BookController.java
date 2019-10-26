@@ -19,21 +19,22 @@ public class BookController {
     }
 
     @GetMapping(value = "/books", produces = "application/json")
-    public Set<Book> getAllBooks(@RequestParam(required = false) String title,@RequestParam(required = false) String author) {
+    public Set<Book> getAllBooks(@RequestParam(required = false) String title, @RequestParam(required = false) String author) {
         return orderService.getBooks(title,author);
     }
 
     @GetMapping(value = "/books/{id}", produces = "application/json")
     public ResponseEntity getBooksById(@PathVariable(required = false) int id) {
         Optional<Book> optionalBook = orderService.findBookById(id);
-        if (optionalBook.isPresent()){
+        if (optionalBook.isPresent()) {
             return ResponseEntity.ok(optionalBook.get());
         }
         return ResponseEntity.notFound().build();
     }
-    @GetMapping(value = "/book/order/{id}", produces = "application/json")
+
+    @GetMapping(value = "/book/borrow/{id}", produces = "application/json")
     public ResponseEntity<Book> borrowBook(@PathVariable int id) {
-        Optional<Book> book = orderService.borrowBook(id);
+        Optional<Book> book = orderService.rentBook(id);
         if (book.isPresent()) {
             return ResponseEntity.ok(book.get());
         }
@@ -51,19 +52,16 @@ public class BookController {
 
     @PostMapping(value = "/book/add", consumes = "application/json")
     public ResponseEntity<Integer> addBook(@RequestBody Book book) {
-        Book addedBook = orderService.addNewBook(book);
+        Book addedBook = orderService.addBook(book);
         return new ResponseEntity<>(addedBook.getId(),
                 HttpStatus.CREATED);
     }
 
     @DeleteMapping("/book/remove/{id}")
     public ResponseEntity removeBook(@PathVariable int id) {
-        if (orderService.removeBook(id)) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(id);
-        }
-        return ResponseEntity.notFound().build();
+        orderService.removeBook(id);
+        return ResponseEntity.noContent().build();
     }
-
 
 
 }
